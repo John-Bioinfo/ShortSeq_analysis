@@ -1,0 +1,38 @@
+
+LOG created in 11/21 2017
+
+
+sudo 执行以下命令
+
+yum -y groupinstall development
+yum -y install zlib-devel
+
+wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tgz
+
+tar -xvf Python-3.6.3.tar
+
+cd Python-3.6.3/
+
+./configure --prefix="/home/qiaozy2/Python3"
+make
+make install
+
+
+vi ~/.bashrc
+
+加上以下内容
+
+export PATH="/home/qiaozy2/Python3/bin:$PATH";
+
+source ~/.bashrc
+  
+cd ~/Python3/bin/
+
+ln -s python3.6 python
+
+sudo 安装 readline 和 readline-devel
+
+yum install readline
+yum install readline-devel
+
+~/Python3/bin/pip3 install --user rpy2
