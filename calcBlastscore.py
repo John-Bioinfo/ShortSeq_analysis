@@ -115,7 +115,9 @@ def filter_Byscore(inputFile, blastS = 16.0):
     return outName, scoreD
 
     
-def filter_blast( tableFile, blastScore, hitNum = 3, ScoreDrop = 30, UnspecialNum = 2):
+def filter_blast( tableFile, blastScore, hitNum = 3, ScoreDrop = 50, UnspecialNum = 10):
+    #   filter_blast( tableFile, blastScore, hitNum = 3, ScoreDrop = 30, UnspecialNum = 2) 
+    
     filter_IDs = set()
     
     for i in blastScore:
@@ -135,9 +137,11 @@ def filter_blast( tableFile, blastScore, hitNum = 3, ScoreDrop = 30, UnspecialNu
         else:
             testScoreDrop = ScoreDrop * 2
         
-        SubNum = sum([i[1] for i in c if i[0] > bestHitScore - ScoreDrop])       # subordinate hsps numbers with rank 2  -  6
+        # SubNum = sum([i[1] for i in c if i[0] > bestHitScore - ScoreDrop])       # subordinate hsps numbers with rank 2  -  6
+        SubNum = sum([i[1] for i in c if i[0] < bestHitScore - ScoreDrop])
         
-        if bestHitN <= hitNum and (testScoreDrop > ScoreDrop or SubNum < UnspecialNum):
+        # if bestHitN <= hitNum and (testScoreDrop > ScoreDrop or SubNum < UnspecialNum):
+        if bestHitN <= hitNum and (testScoreDrop > ScoreDrop and SubNum < UnspecialNum):
             filter_IDs.add(i)
             
     outN = tableFile + "_filter_ProbeHits.xls"
